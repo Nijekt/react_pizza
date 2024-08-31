@@ -41,7 +41,7 @@ const Sort = ({
             changeSortDirection(sortDirection == "desc" ? "asc" : "desc")
           }
         >
-          ↕
+          ↕ ↕
         </b>
       </div>
 
