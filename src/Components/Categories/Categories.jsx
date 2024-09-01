@@ -3,10 +3,6 @@ import { useState } from "react";
 const Categories = ({ categoryId, onClickCategory }) => {
   const categories = ["All", "Meats", "Vegeterian", "Grill", "Spicy", "Closed"];
 
-  // const onClickCategory = (index) => {
-  //   setActiveIndex(index);
-  // };
-
   return (
     <div className="categories">
       <ul>

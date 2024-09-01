@@ -1,0 +1,43 @@
+.pagination {
+  display: inline-flex;
+  gap: 10px;
+  margin-left: 50%;
+  transform: translate(-50%);
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #fe5f1e;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+
+    &:global {
+      &.selected {
+        background-color: #fe5f1e;
+        a {
+          color: #fff;
+        }
+      }
+    }
+    &:hover {
+      background-color: #fe5f1e;
+      a {
+        color: #fff;
+      }
+    }
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      color: #fe5f1e;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
+}

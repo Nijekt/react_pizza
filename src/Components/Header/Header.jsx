@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import logoSvg from "../../assets/img/pizza-logo.svg";
+import Search from "../Search";
 
 const Header = () => {
   return (
@@ -14,6 +15,7 @@ const Header = () => {
             </div>
           </div>
         </NavLink>
+        <Search />
 
         <div className="header__cart">
           <NavLink to="/cart" className="button button--cart">
