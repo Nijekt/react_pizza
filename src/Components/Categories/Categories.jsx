@@ -10,7 +10,7 @@ const Categories = ({ categoryId, onClickCategory }) => {
           <li
             key={index}
             onClick={() => onClickCategory(index)}
-            className={categoryId === index && "active"}
+            className={categoryId === index ? "active" : ""}
           >
             {category}
           </li>

@@ -5,13 +5,14 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 
+import { useDispatch, useSelector } from "react-redux";
 import "./scss/app.scss";
 
 export const SearchContext = createContext("");
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
-  console.log(searchValue);
+
   return (
     <>
       <div className="wrapper">

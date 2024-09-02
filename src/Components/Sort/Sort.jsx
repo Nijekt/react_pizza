@@ -1,16 +1,21 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort, setSortDirection } from "../../store/slices/filterSlice";
 
-const Sort = ({
-  sortType,
-  onChangeSort,
-  changeSortDirection,
-  sortDirection,
-}) => {
+const Sort = () => {
+  const dispatch = useDispatch();
+
+  const sort = useSelector((state) => state.filter.sort);
+
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleChooseSort = (i) => {
-    onChangeSort(i);
+  const handleChooseSort = (obj) => {
+    dispatch(setSort(obj));
     setIsOpen(false);
+  };
+
+  const toogleSortDirection = () => {
+    dispatch(setSortDirection(sort.sortDirection == "desc" ? "asc" : "desc"));
   };
 
   const sortList = [
@@ -34,13 +39,8 @@ const Sort = ({
           />
         </svg>
         <b>Sorted by:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sortType.name}</span>
-        <b
-          className="sort__arrow"
-          onClick={() =>
-            changeSortDirection(sortDirection == "desc" ? "asc" : "desc")
-          }
-        >
+        <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
+        <b className="sort__arrow" onClick={toogleSortDirection}>
           ↕
         </b>
       </div>
@@ -51,7 +51,7 @@ const Sort = ({
             {sortList.map((obj, index) => (
               <li
                 key={index}
-                className={sortType.sort === obj.sort && "active"}
+                className={sort.sort === obj.sort && "active"}
                 onClick={() => handleChooseSort(obj)}
               >
                 {obj.name}
