@@ -10,7 +10,7 @@ const Sort = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChooseSort = (obj) => {
-    dispatch(setSort(obj));
+    dispatch(setSort({ ...obj, sortDirection: sort.sortDirection }));
     setIsOpen(false);
   };
 
@@ -40,7 +40,7 @@ const Sort = () => {
         </svg>
         <b>Sorted by:</b>
         <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
-        <b className="sort__arrow" onClick={toogleSortDirection}>
+        <b className="sort__arrow" onClick={() => toogleSortDirection()}>
           ↕
         </b>
       </div>
