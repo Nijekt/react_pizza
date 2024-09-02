@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort, setSortDirection } from "../../store/slices/filterSlice";
-
+export const sortList = [
+  { name: "popularity", sort: "rating" },
+  { name: "price", sort: "price" },
+  { name: "alphabet", sort: "title" },
+];
 const Sort = () => {
   const dispatch = useDispatch();
 
@@ -18,11 +22,6 @@ const Sort = () => {
     dispatch(setSortDirection(sort.sortDirection == "desc" ? "asc" : "desc"));
   };
 
-  const sortList = [
-    { name: "popularity", sort: "rating" },
-    { name: "price", sort: "price" },
-    { name: "alphabet", sort: "title" },
-  ];
   return (
     <div className="sort">
       <div className="sort__label">
