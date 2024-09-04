@@ -4,19 +4,15 @@ import Header from "./Components/Header/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
-
-import { useDispatch, useSelector } from "react-redux";
 import "./scss/app.scss";
 
 export const SearchContext = createContext("");
 
 function App() {
-  const [searchValue, setSearchValue] = useState("");
-
   return (
     <>
       <div className="wrapper">
-        <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+        <SearchContext.Provider>
           <Header />
           <div className="content">
             <Routes>

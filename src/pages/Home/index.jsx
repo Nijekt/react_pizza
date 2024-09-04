@@ -19,9 +19,8 @@ const Home = () => {
 
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [currentPage, setCurrentPage] = useState(1);
 
-  const { searchValue } = useContext(SearchContext);
+  const { searchValue } = useSelector((state) => state.filter);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -29,24 +28,32 @@ const Home = () => {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
+  // const fetchPizzas = () =>{
+
+  // }
 
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(
-        `https://66cef231901aab2484204015.mockapi.io/items?page=${currentPage}&limit=4&${
-          categoryId > 0 ? `category=${categoryId}` : ""
-        }&sortBy=${sort.sort}&order=${sort.sortDirection}${
-          searchValue ? `&search=${searchValue}` : ""
-        }`
-      )
-      .then((res) => {
-        if (res.status == 404) {
-          return [];
-        }
-        setItems(res.data);
-        setIsLoading(false);
-      });
+    (async () => {
+      setIsLoading(true);
+      await axios
+        .get(
+          `https://66cef231901aab2484204015.mockapi.io/items?page=${currentPage}&limit=4&${
+            categoryId > 0 ? `category=${categoryId}` : ""
+          }&sortBy=${sort.sort}&order=${sort.sortDirection}${
+            searchValue ? `&search=${searchValue}` : ""
+          }`
+        )
+        .then((res) => {
+          if (res.status == 404) {
+            return [];
+          }
+          setItems(res.data);
+          setIsLoading(false);
+          console.log(515);
+        });
+
+      console.log(535);
+    })();
 
     window.scrollTo(0, 0);
   }, [categoryId, sort.sort, sort.sortDirection, searchValue, currentPage]);
@@ -68,11 +75,7 @@ const Home = () => {
         <h2 className="content__title">All Pizzas</h2>
         <div className="content__items">{isLoading ? skeleton : pizzas}</div>
       </div>
-      <Pagination
-        // onChangePage={(number) => setCurrentPage(number)}
-        onChangePage={onChangePage}
-        currentPage={currentPage}
-      />
+      <Pagination onChangePage={onChangePage} currentPage={currentPage} />
     </>
   );
 };
