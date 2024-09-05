@@ -1,26 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
-
 import Categories from "../../Components/Categories/Categories";
 import Sort from "../../Components/Sort/Sort";
 import PizzaBlock from "../../Components/PizzaBlock/PizzaBlock";
 import Sceleton from "../../Components/PizzaBlock/Sceleton";
 import Pagination from "../../Components/Pagination";
-import { SearchContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setCurrentPage } from "../../store/slices/filterSlice";
+import { fetchPizzas, setItems } from "../../store/slices/pizzasSlice";
 import axios from "axios";
+import styles from "./Home.module.scss";
 
 const Home = () => {
-  const { categoryId, sort, currentPage } = useSelector(
+  const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state) => state.filter
   );
+  const { items, status } = useSelector((state) => state.pizzas);
   const dispatch = useDispatch();
-
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { searchValue } = useSelector((state) => state.filter);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -28,31 +24,38 @@ const Home = () => {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
-  // const fetchPizzas = () =>{
-
-  // }
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      await axios
-        .get(
-          `https://66cef231901aab2484204015.mockapi.io/items?page=${currentPage}&limit=4&${
-            categoryId > 0 ? `category=${categoryId}` : ""
-          }&sortBy=${sort.sort}&order=${sort.sortDirection}${
-            searchValue ? `&search=${searchValue}` : ""
-          }`
-        )
-        .then((res) => {
-          if (res.status == 404) {
-            return [];
-          }
-          setItems(res.data);
-          setIsLoading(false);
-          console.log(515);
-        });
+      // setIsLoading(true);
 
-      console.log(535);
+      // try {
+      //   console.log(5555);
+      // const res = await axios.get(
+      //   `https://66cef231901aab2484204015.mockapi.io/items?page=${currentPage}&limit=4&${
+      //     categoryId > 0 ? `category=${categoryId}` : ""
+      //   }&sortBy=${sort.sort}&order=${sort.sortDirection}${
+      //     searchValue ? `&search=${searchValue}` : ""
+      //   }`
+      // );
+      // dispatch(setItems(res.data));
+
+      dispatch(
+        fetchPizzas({
+          currentPage,
+          categoryId,
+          sort,
+          searchValue,
+        })
+      );
+      // } catch (error) {
+      //   dispatch(setItems([]));
+
+      //   console.log("ERROR", error);
+      // }
+      // finally {
+      //   setIsLoading(false);
+      // }
     })();
 
     window.scrollTo(0, 0);
@@ -73,7 +76,19 @@ const Home = () => {
           <Sort />
         </div>
         <h2 className="content__title">All Pizzas</h2>
-        <div className="content__items">{isLoading ? skeleton : pizzas}</div>
+        {status == "error" ? (
+          <div className={styles.error}>
+            <h2>OOOPS SOMETHING WENT WRONG</h2>
+            <p>
+              There was a system failure.Try refreshing the page or come back a
+              little later
+            </p>
+          </div>
+        ) : (
+          <div className="content__items">
+            {status == "loading" ? skeleton : pizzas}
+          </div>
+        )}
       </div>
       <Pagination onChangePage={onChangePage} currentPage={currentPage} />
     </>
