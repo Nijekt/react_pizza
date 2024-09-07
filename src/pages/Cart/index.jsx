@@ -4,10 +4,11 @@ import { NavLink } from "react-router-dom";
 import CartList from "../../Components/CartList";
 import { clearItems } from "../../store/slices/cartSlice";
 import CartEmpty from "../../Components/CartEmpty";
+import { cartSelector } from "../../store/slices/cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector(cartSelector);
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
   const onClickClear = () => {
     dispatch(clearItems());

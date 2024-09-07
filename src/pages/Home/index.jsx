@@ -6,16 +6,22 @@ import PizzaBlock from "../../Components/PizzaBlock/PizzaBlock";
 import Sceleton from "../../Components/PizzaBlock/Sceleton";
 import Pagination from "../../Components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../../store/slices/filterSlice";
-import { fetchPizzas, setItems } from "../../store/slices/pizzasSlice";
-import axios from "axios";
+import {
+  filterSelector,
+  setCategoryId,
+  setCurrentPage,
+} from "../../store/slices/filterSlice";
+import {
+  fetchPizzas,
+  pizzasSelector,
+  setItems,
+} from "../../store/slices/pizzasSlice";
 import styles from "./Home.module.scss";
 
 const Home = () => {
-  const { categoryId, sort, currentPage, searchValue } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizzas);
+  const { categoryId, sort, currentPage, searchValue } =
+    useSelector(filterSelector);
+  const { items, status } = useSelector(pizzasSelector);
   const dispatch = useDispatch();
 
   const onChangeCategory = (id) => {
@@ -27,19 +33,6 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      // setIsLoading(true);
-
-      // try {
-      //   console.log(5555);
-      // const res = await axios.get(
-      //   `https://66cef231901aab2484204015.mockapi.io/items?page=${currentPage}&limit=4&${
-      //     categoryId > 0 ? `category=${categoryId}` : ""
-      //   }&sortBy=${sort.sort}&order=${sort.sortDirection}${
-      //     searchValue ? `&search=${searchValue}` : ""
-      //   }`
-      // );
-      // dispatch(setItems(res.data));
-
       dispatch(
         fetchPizzas({
           currentPage,
@@ -48,14 +41,6 @@ const Home = () => {
           searchValue,
         })
       );
-      // } catch (error) {
-      //   dispatch(setItems([]));
-
-      //   console.log("ERROR", error);
-      // }
-      // finally {
-      //   setIsLoading(false);
-      // }
     })();
 
     window.scrollTo(0, 0);
