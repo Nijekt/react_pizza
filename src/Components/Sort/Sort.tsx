@@ -13,10 +13,10 @@ const Sort = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setIsOpen(false);
       }
@@ -29,7 +29,7 @@ const Sort = () => {
     };
   }, []);
 
-  const handleChooseSort = (obj) => {
+  const handleChooseSort = (obj: SortListItem) => {
     dispatch(setSort({ ...obj, sortDirection: sort.sortDirection }));
     setIsOpen(false);
   };
@@ -38,11 +38,17 @@ const Sort = () => {
     dispatch(setSortDirection(sort.sortDirection == "desc" ? "asc" : "desc"));
   };
 
-  const sortList = [
+  type SortListItem = {
+    name: string;
+    sort: string;
+  };
+
+  const sortList: SortListItem[] = [
     { name: "popularity", sort: "rating" },
     { name: "price", sort: "price" },
     { name: "alphabet", sort: "title" },
   ];
+
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
@@ -71,7 +77,7 @@ const Sort = () => {
             {sortList.map((obj, index) => (
               <li
                 key={index}
-                className={sort.sort === obj.sort && "active"}
+                className={sort.sort === obj.sort ? "active" : ""}
                 onClick={() => handleChooseSort(obj)}
               >
                 {obj.name}

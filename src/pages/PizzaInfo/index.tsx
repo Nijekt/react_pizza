@@ -1,10 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { FC, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-const PizzaInfo = () => {
+const PizzaInfo: FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = useState("");
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -16,9 +21,14 @@ const PizzaInfo = () => {
         console.log(data);
       } catch (error) {
         alert("Error while receiving pizza");
+        navigate("/");
       }
     })();
   }, []);
+
+  if (!pizza) {
+    return "Loading...";
+  }
   return (
     <div className="container">
       <img src={pizza.imageUrl} alt="" />

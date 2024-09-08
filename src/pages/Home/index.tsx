@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useState, useEffect } from "react";
 import Categories from "../../Components/Categories/Categories";
 import Sort from "../../Components/Sort/Sort";
@@ -11,29 +11,26 @@ import {
   setCategoryId,
   setCurrentPage,
 } from "../../store/slices/filterSlice";
-import {
-  fetchPizzas,
-  pizzasSelector,
-  setItems,
-} from "../../store/slices/pizzasSlice";
+import { fetchPizzas, pizzasSelector } from "../../store/slices/pizzasSlice";
 import styles from "./Home.module.scss";
 
-const Home = () => {
+const Home: FC = () => {
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(filterSelector);
   const { items, status } = useSelector(pizzasSelector);
   const dispatch = useDispatch();
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
   useEffect(() => {
     (async () => {
       dispatch(
+        // @ts-ignore
         fetchPizzas({
           currentPage,
           categoryId,
@@ -46,7 +43,7 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, [categoryId, sort.sort, sort.sortDirection, searchValue, currentPage]);
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeleton = [...new Array(6)].map((_, index) => (
     <Sceleton key={index} />
   ));

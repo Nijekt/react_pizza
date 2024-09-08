@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import ContentLoader from "react-content-loader";
 
-const Sceleton = (props) => (
+const Sceleton: FC = () => (
   <ContentLoader
     className="pizza-block"
     speed={2}
@@ -10,7 +10,6 @@ const Sceleton = (props) => (
     viewBox="0 0 280 461"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
-    {...props}
   >
     <rect x="5" y="242" rx="10" ry="10" width="280" height="19" />
     <circle cx="139" cy="117" r="117" />

@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { FC } from "react";
 
-const Categories = ({ categoryId, onClickCategory }) => {
+type CategoriesProps = {
+  categoryId: number;
+  onClickCategory: any;
+};
+
+const Categories: FC<CategoriesProps> = ({ categoryId, onClickCategory }) => {
   const categories = ["All", "Meats", "Vegeterian", "Grill", "Spicy", "Closed"];
 
   return (

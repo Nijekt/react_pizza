@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import CartList from "../../Components/CartList";
@@ -6,10 +6,13 @@ import { clearItems } from "../../store/slices/cartSlice";
 import CartEmpty from "../../Components/CartEmpty";
 import { cartSelector } from "../../store/slices/cartSlice";
 
-const Cart = () => {
+const Cart: FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(cartSelector);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
   const onClickClear = () => {
     dispatch(clearItems());
   };
@@ -97,7 +100,7 @@ const Cart = () => {
         </div>
         <div className="content__items">
           {items.map(
-            (item) =>
+            (item: any) =>
               item.count > 0 && (
                 <CartList key={[item.id, item.size, item.type]} {...item} />
               )
