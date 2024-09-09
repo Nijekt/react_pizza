@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSort,
@@ -16,8 +16,8 @@ const Sort = () => {
   const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!event.composedPath().includes(sortRef.current as EventTarget)) {
         setIsOpen(false);
       }
     };
@@ -40,7 +40,7 @@ const Sort = () => {
 
   type SortListItem = {
     name: string;
-    sort: string;
+    sort: "rating" | "title" | "price";
   };
 
   const sortList: SortListItem[] = [

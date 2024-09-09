@@ -26,6 +26,8 @@ const Home: FC = () => {
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
+  const sortBy = sort.sort;
+  const sortDirection = sort.sortDirection;
 
   useEffect(() => {
     (async () => {
@@ -34,7 +36,8 @@ const Home: FC = () => {
         fetchPizzas({
           currentPage,
           categoryId,
-          sort,
+          sortBy,
+          sortDirection,
           searchValue,
         })
       );
