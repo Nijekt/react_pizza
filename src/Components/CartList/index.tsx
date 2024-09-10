@@ -1,6 +1,12 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
-import { addItem, minusItem, removeItem } from "../../store/slices/cartSlice";
+import {
+  addItem,
+  CartItem,
+  minusItem,
+  removeItem,
+} from "../../store/slices/cartSlice";
+import { useAppDispatch } from "../../store/store";
 
 type CartListProperties = {
   id: string;
@@ -21,7 +27,7 @@ const CartList: FC<CartListProperties> = ({
   price,
   count,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickPlus = () => {
     dispatch(
@@ -29,12 +35,12 @@ const CartList: FC<CartListProperties> = ({
         id,
         type,
         size,
-      })
+      } as CartItem)
     );
   };
 
   const onClickMinus = () => {
-    dispatch(minusItem({ id, type, size }));
+    dispatch(minusItem({ id, type, size } as CartItem));
   };
   return (
     <div className="cart__item">
@@ -96,7 +102,7 @@ const CartList: FC<CartListProperties> = ({
         <b>{price * count} $</b>
       </div>
       <div
-        onClick={() => dispatch(removeItem(id))}
+        onClick={() => dispatch(removeItem({ id, type, size } as CartItem))}
         className="cart__item-remove"
       >
         <div className="button button--outline button--circle">

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import logoSvg from "../../assets/img/pizza-logo.svg";
 import Search from "../Search";
 import { useSelector } from "react-redux";
@@ -7,6 +7,8 @@ import { FC } from "react";
 
 const Header: FC = () => {
   const { items, totalPrice } = useSelector(cartSelector);
+
+  const location = useLocation();
 
   const totalCount = items.reduce(
     (sum: number, item: any) => sum + item.count,
@@ -25,7 +27,7 @@ const Header: FC = () => {
             </div>
           </div>
         </NavLink>
-        <Search />
+        {location.pathname !== "/cart" && <Search />}
 
         <div className="header__cart">
           <NavLink to="/cart" className="button button--cart">

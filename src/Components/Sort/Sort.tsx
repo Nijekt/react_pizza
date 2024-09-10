@@ -1,15 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSort,
   setSortDirection,
   sortSelector,
+  SortType,
 } from "../../store/slices/filterSlice";
+import { useAppDispatch } from "../../store/store";
 
-const Sort = () => {
-  const dispatch = useDispatch();
+type SortProps = {
+  sortValue: SortType;
+};
 
-  const sort = useSelector(sortSelector);
+const Sort: FC<SortProps> = memo(({ sortValue }) => {
+  const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,12 +34,14 @@ const Sort = () => {
   }, []);
 
   const handleChooseSort = (obj: SortListItem) => {
-    dispatch(setSort({ ...obj, sortDirection: sort.sortDirection }));
+    dispatch(setSort({ ...obj, sortDirection: sortValue.sortDirection }));
     setIsOpen(false);
   };
 
   const toogleSortDirection = () => {
-    dispatch(setSortDirection(sort.sortDirection == "desc" ? "asc" : "desc"));
+    dispatch(
+      setSortDirection(sortValue.sortDirection == "desc" ? "asc" : "desc")
+    );
   };
 
   type SortListItem = {
@@ -65,7 +71,7 @@ const Sort = () => {
           />
         </svg>
         <b>Sorted by:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{sortValue.name}</span>
         <b className="sort__arrow" onClick={() => toogleSortDirection()}>
           ↕
         </b>
@@ -77,7 +83,7 @@ const Sort = () => {
             {sortList.map((obj, index) => (
               <li
                 key={index}
-                className={sort.sort === obj.sort ? "active" : ""}
+                className={sortValue.sort === obj.sort ? "active" : ""}
                 onClick={() => handleChooseSort(obj)}
               >
                 {obj.name}
@@ -88,6 +94,6 @@ const Sort = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

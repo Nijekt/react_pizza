@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { useState, useEffect } from "react";
 import Categories from "../../Components/Categories/Categories";
 import Sort from "../../Components/Sort/Sort";
@@ -13,16 +13,17 @@ import {
 } from "../../store/slices/filterSlice";
 import { fetchPizzas, pizzasSelector } from "../../store/slices/pizzasSlice";
 import styles from "./Home.module.scss";
+import { useAppDispatch } from "../../store/store";
 
 const Home: FC = () => {
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(filterSelector);
   const { items, status } = useSelector(pizzasSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
@@ -32,7 +33,6 @@ const Home: FC = () => {
   useEffect(() => {
     (async () => {
       dispatch(
-        // @ts-ignore
         fetchPizzas({
           currentPage,
           categoryId,
@@ -58,7 +58,7 @@ const Home: FC = () => {
             categoryId={categoryId}
             onClickCategory={onChangeCategory}
           />
-          <Sort />
+          <Sort sortValue={sort} />
         </div>
         <h2 className="content__title">All Pizzas</h2>
         {status == "error" ? (

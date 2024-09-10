@@ -43,13 +43,23 @@ export const cartSlice = createSlice({
         0
       );
     },
-    removeItem(state, action: PayloadAction<string>) {
+    removeItem(state, action: PayloadAction<CartItem>) {
       const removedItem = state.items.find(
-        (item) => item.id === action.payload
+        (item) =>
+          item.id === action.payload.id &&
+          item.type === action.payload.type &&
+          item.size === action.payload.size
       );
       if (removedItem) {
         state.totalPrice -= removedItem.price * removedItem.count;
-        state.items = state.items.filter((item) => item.id !== action.payload);
+        state.items = state.items.filter(
+          (item) =>
+            !(
+              item.id === action.payload.id &&
+              item.type === action.payload.type &&
+              item.size === action.payload.size
+            )
+        );
       }
     },
     minusItem(state, action: PayloadAction<CartItem>) {
