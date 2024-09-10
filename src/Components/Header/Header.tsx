@@ -3,11 +3,21 @@ import logoSvg from "../../assets/img/pizza-logo.svg";
 import Search from "../Search";
 import { useSelector } from "react-redux";
 import { cartSelector } from "../../store/slices/cartSlice";
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 const Header: FC = () => {
   const { items, totalPrice } = useSelector(cartSelector);
+  const isMounted = useRef(false);
 
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem("test", json);
+    }
+
+    isMounted.current = true;
+  }, [items]);
+  console.log(localStorage.test);
   const location = useLocation();
 
   const totalCount = items.reduce(
