@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import logoSvg from "../../assets/img/pizza-logo.svg";
 import Search from "../Search";
 import { useSelector } from "react-redux";
-import { cartSelector } from "../../store/slices/cartSlice";
+import { cartSelector } from "../../store/cart/selectors";
 import { FC, useEffect, useRef, useState } from "react";
 
 const Header: FC = () => {

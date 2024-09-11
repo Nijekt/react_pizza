@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, CartItem } from "../../store/slices/cartSlice";
-import { CartItemSelectorById } from "../../store/slices/cartSlice";
+import { addItem } from "../../store/cart/slice";
+import { CartItem } from "../../store/cart/types";
+import { CartItemSelectorById } from "../../store/cart/selectors";
 import { Link } from "react-router-dom";
 
 type PizzaBlockProps = {

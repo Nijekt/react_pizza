@@ -1,11 +1,7 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
-import {
-  addItem,
-  CartItem,
-  minusItem,
-  removeItem,
-} from "../../store/slices/cartSlice";
+import { addItem, minusItem, removeItem } from "../../store/cart/slice";
+import { CartItem } from "../../store/cart/types";
 import { useAppDispatch } from "../../store/store";
 
 type CartListProperties = {

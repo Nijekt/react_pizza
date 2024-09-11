@@ -1,11 +1,6 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setSort,
-  setSortDirection,
-  sortSelector,
-  SortType,
-} from "../../store/slices/filterSlice";
+import { setSort, setSortDirection } from "../../store/filter/slice";
+import { SortType } from "../../store/filter/types";
 import { useAppDispatch } from "../../store/store";
 
 type SortProps = {

@@ -6,12 +6,10 @@ import PizzaBlock from "../../Components/PizzaBlock/PizzaBlock";
 import Sceleton from "../../Components/PizzaBlock/Sceleton";
 import Pagination from "../../Components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterSelector,
-  setCategoryId,
-  setCurrentPage,
-} from "../../store/slices/filterSlice";
-import { fetchPizzas, pizzasSelector } from "../../store/slices/pizzasSlice";
+import { setCategoryId, setCurrentPage } from "../../store/filter/slice";
+import { filterSelector } from "../../store/filter/selectors";
+import { pizzasSelector } from "../../store/pizzas/selectors";
+import { fetchPizzas } from "../../store/pizzas/asyncActions";
 import styles from "./Home.module.scss";
 import { useAppDispatch } from "../../store/store";
 
