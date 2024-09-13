@@ -1,18 +1,23 @@
-import React, { FC, useCallback } from "react";
-import { useState, useEffect } from "react";
-import Categories from "../../Components/Categories/Categories";
-import Sort from "../../Components/Sort/Sort";
-import PizzaBlock from "../../Components/PizzaBlock/PizzaBlock";
-import Sceleton from "../../Components/PizzaBlock/Sceleton";
-import Pagination from "../../Components/Pagination";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useCallback } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+
+import {
+  Categories,
+  Sort,
+  PizzaBlock,
+  Sceleton,
+  Pagination,
+} from "../../Components/index";
+
 import { setCategoryId, setCurrentPage } from "../../store/filter/slice";
 import { filterSelector } from "../../store/filter/selectors";
 import { pizzasSelector } from "../../store/pizzas/selectors";
 import { fetchPizzas } from "../../store/pizzas/asyncActions";
-import styles from "./Home.module.scss";
+
 import { useAppDispatch } from "../../store/store";
 
+import styles from "./Home.module.scss";
 const Home: FC = () => {
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(filterSelector);

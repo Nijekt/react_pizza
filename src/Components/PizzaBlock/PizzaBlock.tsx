@@ -40,7 +40,7 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
     };
     dispatch(addItem(item));
   };
-
+  console.log(cartItem);
   return (
     <div className="pizza-block__wrapper">
       <div className="pizza-block">

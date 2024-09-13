@@ -1,9 +1,10 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import CartList from "../../Components/CartList";
+
+import { CartEmpty, CartList } from "../../Components";
+
 import { clearItems } from "../../store/cart/slice";
-import CartEmpty from "../../Components/CartEmpty";
 import { cartSelector } from "../../store/cart/selectors";
 
 const Cart: FC = () => {
@@ -110,11 +111,11 @@ const Cart: FC = () => {
           <div className="cart__bottom-details">
             <span>
               {" "}
-              Всего пицц: <b>{totalCount} шт.</b>{" "}
+              Total pizzas: <b>{totalCount} </b>{" "}
             </span>
             <span>
               {" "}
-              Сумма заказа: <b>{totalPrice} $</b>{" "}
+              Order total: <b>{totalPrice} $</b>{" "}
             </span>
           </div>
           <div className="cart__bottom-buttons">

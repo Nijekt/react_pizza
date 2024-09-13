@@ -1,13 +1,14 @@
-import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import styles from "./Pizza.module.scss";
+import axios from "axios";
 const PizzaInfo: FC = () => {
   const { id } = useParams();
   const [pizza, setPizza] = useState<{
     imageUrl: string;
     title: string;
     price: number;
+    description: string;
   }>();
   const navigate = useNavigate();
 
@@ -29,11 +30,23 @@ const PizzaInfo: FC = () => {
   if (!pizza) {
     return "Loading...";
   }
+
   return (
     <div className="container">
-      <img src={pizza.imageUrl} alt="" />
-      <h2>{pizza.title}</h2>
-      <p>{pizza.price}$</p>
+      <button
+        className="button button--outline button--add go-back-btn"
+        onClick={() => navigate(-1)}
+      >
+        Go back
+      </button>
+      <div className={styles.pizza__info}>
+        <img src={pizza.imageUrl} alt="" />
+        <div className={styles.info}>
+          <h2>{pizza.title}</h2>
+          <p className="pizza-block__price">{pizza.price}$</p>
+          <p className={styles.pizza__desc}>{pizza.description}</p>
+        </div>
+      </div>
     </div>
   );
 };
